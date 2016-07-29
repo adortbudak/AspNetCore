@@ -1,5 +1,4 @@
-﻿using System;
-using AspNetCore.Entities;
+﻿using AspNetCore.Entities;
 using AspNetCore.Services;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -9,6 +8,7 @@ using Microsoft.AspNet.Routing;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace AspNetCore
 {
@@ -44,8 +44,7 @@ namespace AspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-            IHostingEnvironment environment,
+        public void Configure(IApplicationBuilder app, IHostingEnvironment environment,IApplicationEnvironment appEnvironment,
             IGreeter greeter)
         {
             app.UseIISPlatformHandler();
@@ -62,6 +61,8 @@ namespace AspNetCore
             app.UseRuntimeInfoPage("/info");
             
             app.UseFileServer();
+
+            app.UseNodeModules(appEnvironment);
 
             app.UseIdentity();
 
